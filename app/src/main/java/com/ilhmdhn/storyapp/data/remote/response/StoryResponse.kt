@@ -24,8 +24,7 @@ data class StoryResponse(
 data class ListStoryItem(
 
 	@PrimaryKey(autoGenerate = true)
-	@field:SerializedName("id")
-	var idDb: Int,
+	val idnya: Int,
 
 	@field:SerializedName("photoUrl")
 	val photoUrl: String,

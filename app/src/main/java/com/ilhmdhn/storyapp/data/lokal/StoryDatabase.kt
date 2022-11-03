@@ -8,7 +8,7 @@ import com.ilhmdhn.storyapp.data.remote.response.ListStoryItem
 
 @Database(
     entities = [ListStoryItem::class],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 abstract class StoryDatabase: RoomDatabase() {

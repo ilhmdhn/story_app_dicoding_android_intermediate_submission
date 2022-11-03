@@ -2,6 +2,7 @@ package com.ilhmdhn.storyapp.view.story
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         }
         appViewModel.getStory(userPreference.getUser().token.toString()).observe(this,
             { dataStory ->
+                Log.d("data main act", dataStory.toString())
                 storyAdapter.submitData(lifecycle, dataStory)
             })
     }

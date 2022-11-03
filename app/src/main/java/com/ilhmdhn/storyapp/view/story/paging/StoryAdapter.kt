@@ -14,6 +14,18 @@ import com.ilhmdhn.storyapp.view.story.DetailStoryActivity
 
 class StoryAdapter: PagingDataAdapter<ListStoryItem, StoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
+        return ListViewHolder(ListStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    }
+
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
+        val data = getItem(position)
+        Log.d("data masuk", data.toString())
+        if (data!=null){
+            holder.bind(data)
+        }
+    }
+
     class ListViewHolder(private val binding: ListStoryBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(data: ListStoryItem){
             with(binding){
@@ -28,17 +40,6 @@ class StoryAdapter: PagingDataAdapter<ListStoryItem, StoryAdapter.ListViewHolder
                     itemView.context.startActivity(intent)
                 }
             }
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        return ListViewHolder(ListStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-    }
-
-    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val data = getItem(position)
-        if (data!=null){
-            holder.bind(data)
         }
     }
 

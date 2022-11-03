@@ -8,7 +8,6 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.ilhmdhn.storyapp.data.lokal.StoryDatabase
-import com.ilhmdhn.storyapp.data.remote.ApiConfig
 import com.ilhmdhn.storyapp.data.remote.ApiService
 import com.ilhmdhn.storyapp.data.remote.response.ListStoryItem
 
@@ -36,6 +35,7 @@ class StoryRemoteMediator (
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         }catch(e: Exception){
+            Log.e("Errornya", e.toString())
             return MediatorResult.Error(e)
         }
     }
