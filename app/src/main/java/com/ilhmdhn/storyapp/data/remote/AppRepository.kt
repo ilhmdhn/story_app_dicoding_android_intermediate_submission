@@ -11,7 +11,6 @@ import com.ilhmdhn.storyapp.data.StoryRemoteMediator
 import com.ilhmdhn.storyapp.data.lokal.StoryDatabase
 import com.ilhmdhn.storyapp.data.remote.response.*
 import com.ilhmdhn.storyapp.model.Loading
-import com.ilhmdhn.storyapp.view.story.paging.StoryPagingSource
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.greenrobot.eventbus.EventBus
@@ -74,7 +73,7 @@ class AppRepository(private val  storyDatabase: StoryDatabase, private val apiSe
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
-                pageSize = 10
+                pageSize = 5
             ),
             remoteMediator = StoryRemoteMediator(auth, storyDatabase, apiService),
             pagingSourceFactory = {

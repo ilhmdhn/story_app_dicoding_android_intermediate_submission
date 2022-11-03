@@ -17,7 +17,7 @@ import com.ilhmdhn.storyapp.view.viewmodel.ViewModelFactory
 class LoginActivity : AppCompatActivity() {
 
         private lateinit var binding: ActivityLoginBinding
-        private var userPreference = UserPreference(this)
+        private lateinit var userPreference: UserPreference
     val appViewModel: AppViewModel by viewModels {
         ViewModelFactory(this)
     }
@@ -26,6 +26,8 @@ class LoginActivity : AppCompatActivity() {
             super.onCreate(savedInstanceState)
             binding = ActivityLoginBinding.inflate(layoutInflater)
             setContentView(binding.root)
+
+            userPreference = UserPreference(this)
 
             checkLogin()
 
