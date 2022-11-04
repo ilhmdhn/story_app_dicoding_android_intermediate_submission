@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     }
     private lateinit var binding: ActivityMainBinding
     private lateinit var userPreference: UserPreference
+    val storyAdapter = StoryAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +37,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AddStoryActivity::class.java))
         }
 
-        getStoryData()
-    }
-
-    private fun getStoryData(){
-
-        val storyAdapter = StoryAdapter()
         with(binding.rvStory){
             layoutManager = LinearLayoutManager(this@MainActivity)
             setHasFixedSize(true)
@@ -52,10 +47,16 @@ class MainActivity : AppCompatActivity() {
                 }
             )
         }
-        appViewModel.getStory(userPreference.getUser().token.toString()).observe(this,
-            { dataStory ->
-                Log.d("data main act", dataStory.toString())
-                storyAdapter.submitData(lifecycle, dataStory)
+
+
+        getStoryData()
+    }
+
+    private fun getStoryData(){
+
+        appViewModel.getStory(userPreference.getUser().token.toString()).observe(this, {
+                storyAdapter.submitData(lifecycle, it)
+                Log.d("data main act", it.toString())
             })
     }
 

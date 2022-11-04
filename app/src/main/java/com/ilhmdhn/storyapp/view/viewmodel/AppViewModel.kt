@@ -2,7 +2,9 @@ package com.ilhmdhn.storyapp.view.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.ilhmdhn.storyapp.data.remote.AppRepository
 import com.ilhmdhn.storyapp.data.remote.response.*
 import okhttp3.MultipartBody
@@ -17,7 +19,7 @@ class AppViewModel(private val appRepository: AppRepository): ViewModel() {
     }
 
     fun getStory(auth: String): LiveData<PagingData<ListStoryItem>>{
-        return appRepository.getStory(auth)
+        return appRepository.getStory(auth).cachedIn(viewModelScope)
     }
 
     fun getStoryLocation(auth: String): LiveData<StoryResponse>{

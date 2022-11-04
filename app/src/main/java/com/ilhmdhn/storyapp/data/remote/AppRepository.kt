@@ -1,6 +1,5 @@
 package com.ilhmdhn.storyapp.data.remote
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,10 +9,8 @@ import com.google.gson.reflect.TypeToken
 import com.ilhmdhn.storyapp.data.StoryRemoteMediator
 import com.ilhmdhn.storyapp.data.lokal.StoryDatabase
 import com.ilhmdhn.storyapp.data.remote.response.*
-import com.ilhmdhn.storyapp.model.Loading
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +18,6 @@ import retrofit2.Response
 class AppRepository(private val  storyDatabase: StoryDatabase, private val apiService: ApiService) {
 
     fun postRegister(name: String, email: String, password: String):LiveData<BaseResponse>{
-        EventBus.getDefault().post(Loading(true))
         val dataResponse = MutableLiveData<BaseResponse>()
         val client = ApiConfig.getApiService().postRegister(name, email, password)
         client.enqueue(object: Callback<BaseResponse> {
@@ -40,12 +36,10 @@ class AppRepository(private val  storyDatabase: StoryDatabase, private val apiSe
                 dataResponse.postValue(BaseResponse(true, t.message.toString()))
             }
         })
-        EventBus.getDefault().post(Loading(false))
         return dataResponse
     }
 
     fun postLogin(email: String, password: String): LiveData<LoginResponse>{
-        EventBus.getDefault().post(Loading(true))
         val dataResponse = MutableLiveData<LoginResponse>()
         val client = ApiConfig.getApiService().postLogin(email, password)
         client.enqueue(object: Callback<LoginResponse>{
@@ -65,7 +59,6 @@ class AppRepository(private val  storyDatabase: StoryDatabase, private val apiSe
                 dataResponse.postValue(LoginResponse(null, true, t.message.toString()))
             }
         })
-        EventBus.getDefault().post(Loading(false))
         return dataResponse
     }
 
@@ -84,7 +77,6 @@ class AppRepository(private val  storyDatabase: StoryDatabase, private val apiSe
     }
 
     fun getStoryLocation(auth: String): LiveData<StoryResponse>{
-        EventBus.getDefault().post(Loading(true))
         val dataResponse = MutableLiveData<StoryResponse>()
         val client = ApiConfig.getApiService().getStoryMaps("Bearer "+auth)
         client.enqueue(object: Callback<StoryResponse>{
@@ -103,12 +95,10 @@ class AppRepository(private val  storyDatabase: StoryDatabase, private val apiSe
                 dataResponse.postValue(StoryResponse(mutableListOf(), true, t.message.toString()))
             }
         })
-        EventBus.getDefault().post(Loading(false))
         return dataResponse
     }
 
     fun postStory(auth: String, file: MultipartBody.Part, description: RequestBody):LiveData<BaseResponse>{
-        EventBus.getDefault().post(Loading(true))
         val dataResponse = MutableLiveData<BaseResponse>()
         val client = ApiConfig.getApiService().postStory("Bearer "+auth, file, description)
         client.enqueue(object: Callback<BaseResponse>{
@@ -127,12 +117,10 @@ class AppRepository(private val  storyDatabase: StoryDatabase, private val apiSe
                 dataResponse.postValue(BaseResponse(true, t.message.toString()))
             }
         })
-        EventBus.getDefault().post(Loading(false))
         return dataResponse
     }
 
     fun getDetailStory(auth: String, id: String): LiveData<DetailResponse>{
-        EventBus.getDefault().post(Loading(true))
         val dataResponse = MutableLiveData<DetailResponse>()
         val client = ApiConfig.getApiService().getDetailStory("Bearer "+ auth, id)
         client.enqueue(object: Callback<DetailResponse>{
@@ -151,7 +139,6 @@ class AppRepository(private val  storyDatabase: StoryDatabase, private val apiSe
                 dataResponse.postValue(DetailResponse(true, t.message))
             }
         })
-        EventBus.getDefault().post(Loading(false))
         return dataResponse
     }
 }
