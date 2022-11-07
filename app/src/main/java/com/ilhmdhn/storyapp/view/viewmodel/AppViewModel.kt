@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.ilhmdhn.storyapp.data.remote.AppRepository
+import com.ilhmdhn.storyapp.data.AppRepository
 import com.ilhmdhn.storyapp.data.remote.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -26,7 +26,7 @@ class AppViewModel(private val appRepository: AppRepository): ViewModel() {
         return appRepository.getStoryLocation(auth)
     }
 
-    fun postStory(auth: String, file: MultipartBody.Part, description: RequestBody):LiveData<BaseResponse>{
+    fun postStory(auth: String, file: MultipartBody.Part?, description: RequestBody?):LiveData<BaseResponse>{
         return appRepository.postStory(auth, file, description)
     }
 

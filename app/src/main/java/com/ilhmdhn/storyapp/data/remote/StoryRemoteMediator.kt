@@ -1,6 +1,5 @@
-package com.ilhmdhn.storyapp.data
+package com.ilhmdhn.storyapp.data.remote
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState.Loading.endOfPaginationReached
 import androidx.paging.LoadType
@@ -9,7 +8,6 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.ilhmdhn.storyapp.data.lokal.RemoteKeys
 import com.ilhmdhn.storyapp.data.lokal.StoryDatabase
-import com.ilhmdhn.storyapp.data.remote.ApiService
 import com.ilhmdhn.storyapp.data.remote.response.ListStoryItem
 
 @OptIn(ExperimentalPagingApi::class)

@@ -31,8 +31,8 @@ interface ApiService {
     @POST("stories")
     fun postStory(
         @Header("Authorization") bearer: String,
-        @Part file: MultipartBody.Part,
-        @Part("description") description: RequestBody
+        @Part file: MultipartBody.Part?,
+        @Part("description") description: RequestBody?
     ): Call<BaseResponse>
 
     @GET("stories")

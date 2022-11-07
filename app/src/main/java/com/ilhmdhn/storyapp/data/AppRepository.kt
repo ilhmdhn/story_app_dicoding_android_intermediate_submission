@@ -1,4 +1,4 @@
-package com.ilhmdhn.storyapp.data.remote
+package com.ilhmdhn.storyapp.data
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.ilhmdhn.storyapp.data.StoryRemoteMediator
 import com.ilhmdhn.storyapp.data.lokal.StoryDatabase
+import com.ilhmdhn.storyapp.data.remote.ApiConfig
+import com.ilhmdhn.storyapp.data.remote.ApiService
+import com.ilhmdhn.storyapp.data.remote.StoryRemoteMediator
 import com.ilhmdhn.storyapp.data.remote.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -15,7 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AppRepository(private val  storyDatabase: StoryDatabase, private val apiService: ApiService) {
+class AppRepository(private val storyDatabase: StoryDatabase, private val apiService: ApiService) {
 
     fun postRegister(name: String, email: String, password: String):LiveData<BaseResponse>{
         val dataResponse = MutableLiveData<BaseResponse>()
@@ -98,7 +100,7 @@ class AppRepository(private val  storyDatabase: StoryDatabase, private val apiSe
         return dataResponse
     }
 
-    fun postStory(auth: String, file: MultipartBody.Part, description: RequestBody):LiveData<BaseResponse>{
+    fun postStory(auth: String, file: MultipartBody.Part?, description: RequestBody?):LiveData<BaseResponse>{
         val dataResponse = MutableLiveData<BaseResponse>()
         val client = ApiConfig.getApiService().postStory("Bearer "+auth, file, description)
         client.enqueue(object: Callback<BaseResponse>{
