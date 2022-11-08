@@ -37,26 +37,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AddStoryActivity::class.java))
         }
 
-        with(binding.rvStory){
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            setHasFixedSize(true)
-
-            adapter = storyAdapter.withLoadStateFooter(
-                footer = LoadingStateAdapter {
-                    storyAdapter.retry()
-                }
-            )
-        }
-
-
+        binding.rvStory.layoutManager = LinearLayoutManager(this)
+//        binding.rvStory.setHasFixedSize(true)
+        binding.rvStory.adapter = storyAdapter.withLoadStateFooter(
+                        footer = LoadingStateAdapter {
+                        storyAdapter.retry()
+                    }
+                )
         getStoryData()
     }
 
     private fun getStoryData(){
-
         appViewModel.getStory(userPreference.getUser().token.toString()).observe(this, {
                 storyAdapter.submitData(lifecycle, it)
-                Log.d("data main act", it.toString())
             })
     }
 

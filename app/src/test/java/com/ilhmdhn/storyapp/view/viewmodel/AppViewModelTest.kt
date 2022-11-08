@@ -9,6 +9,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.ilhmdhn.storyapp.data.AppRepository
+import com.ilhmdhn.storyapp.data.remote.RemoteDataSource
 import com.ilhmdhn.storyapp.data.remote.response.*
 import com.ilhmdhn.storyapp.util.DataDummy
 import com.ilhmdhn.storyapp.view.story.paging.StoryAdapter
@@ -38,12 +39,14 @@ class AppViewModelTest {
 
     @Mock
     private lateinit var appRepository: AppRepository
+    @Mock
+    private lateinit var remoteDataSource: RemoteDataSource
     private lateinit var appViewModel: AppViewModel
     private val dummy = DataDummy
 
     @Before
     fun setUp(){
-        appViewModel = AppViewModel(appRepository)
+        appViewModel = AppViewModel(appRepository, remoteDataSource)
     }
 
     @Test
@@ -51,10 +54,10 @@ class AppViewModelTest {
         val expectedResponse = MutableLiveData<LoginResponse>()
         expectedResponse.value = dummy.dummyResponseLoginSuccess()
 
-        `when`(appRepository.postLogin("","")).thenReturn(expectedResponse)
+        `when`(remoteDataSource.postLogin("","")).thenReturn(expectedResponse)
         val actualResponse = appViewModel.postLogin("","").getOrAwaitValue()
 
-        Mockito.verify(appRepository).postLogin("","")
+        Mockito.verify(remoteDataSource).postLogin("","")
         Assert.assertNotNull(actualResponse)
         Assert.assertEquals(dummy.dummyResponseLoginSuccess(), actualResponse)
     }
@@ -64,10 +67,10 @@ class AppViewModelTest {
         val expectedResponse = MutableLiveData<BaseResponse>()
         expectedResponse.value = dummy.dummyResponseRegisterSuccess()
 
-        `when`(appRepository.postRegister("", "", "")).thenReturn(expectedResponse)
+        `when`(remoteDataSource.postRegister("", "", "")).thenReturn(expectedResponse)
         val actualResponse = appViewModel.postRegister("", "", "").getOrAwaitValue()
 
-        Mockito.verify(appRepository).postRegister("", "", "")
+        Mockito.verify(remoteDataSource).postRegister("", "", "")
 
         Assert.assertNotNull(actualResponse)
         Assert.assertEquals(dummy.dummyResponseRegisterSuccess(), actualResponse)
@@ -101,10 +104,10 @@ class AppViewModelTest {
         val expectedResponse = MutableLiveData<StoryResponse>()
         expectedResponse.value = dummy.dummyResponseGetStoryLocationSuccess()
 
-        `when`(appRepository.getStoryLocation("")).thenReturn(expectedResponse)
+        `when`(remoteDataSource.getStoryLocation("")).thenReturn(expectedResponse)
         val actualResponse = appViewModel.getStoryLocation("").getOrAwaitValue()
 
-        Mockito.verify(appRepository).getStoryLocation("")
+        Mockito.verify(remoteDataSource).getStoryLocation("")
 
         Assert.assertNotNull(actualResponse)
         Assert.assertEquals(dummy.dummyResponseGetStoryLocationSuccess(), actualResponse)
@@ -115,10 +118,10 @@ class AppViewModelTest {
         val expectedResponse = MutableLiveData<BaseResponse>()
         expectedResponse.value = dummy.dummyResponsePostStorySuccess()
 
-        `when`(appRepository.postStory("", null, null)).thenReturn(expectedResponse)
+        `when`(remoteDataSource.postStory("", null, null)).thenReturn(expectedResponse)
         val actualResponse = appViewModel.postStory("", null, null).getOrAwaitValue()
 
-        Mockito.verify(appRepository).postStory("", null, null)
+        Mockito.verify(remoteDataSource).postStory("", null, null)
 
         Assert.assertNotNull(actualResponse)
         Assert.assertEquals(dummy.dummyResponsePostStorySuccess(), actualResponse)
@@ -129,10 +132,10 @@ class AppViewModelTest {
         val expectedResponse = MutableLiveData<DetailResponse>()
         expectedResponse.value = dummy.dummyResponseGetDetailStorySuccess()
 
-        `when`(appRepository.getDetailStory("", "")).thenReturn(expectedResponse)
+        `when`(remoteDataSource.getDetailStory("", "")).thenReturn(expectedResponse)
         val actualResponse = appViewModel.getDetailStory("", "").getOrAwaitValue()
 
-        Mockito.verify(appRepository).getDetailStory("", "")
+        Mockito.verify(remoteDataSource).getDetailStory("", "")
 
         Assert.assertNotNull(actualResponse)
         Assert.assertEquals(dummy.dummyResponseGetDetailStorySuccess(), actualResponse)
@@ -143,10 +146,10 @@ class AppViewModelTest {
         val expectedResponse = MutableLiveData<LoginResponse>()
         expectedResponse.value = dummy.dummyResponseLoginFailed()
 
-        `when`(appRepository.postLogin("","")).thenReturn(expectedResponse)
+        `when`(remoteDataSource.postLogin("","")).thenReturn(expectedResponse)
         val actualResponse = appViewModel.postLogin("","").getOrAwaitValue()
 
-        Mockito.verify(appRepository).postLogin("","")
+        Mockito.verify(remoteDataSource).postLogin("","")
         Assert.assertNotNull(actualResponse)
         Assert.assertEquals(dummy.dummyResponseLoginFailed(), actualResponse)
     }
@@ -156,10 +159,10 @@ class AppViewModelTest {
         val expectedResponse = MutableLiveData<BaseResponse>()
         expectedResponse.value = dummy.dummyResponseRegisterFailed()
 
-        `when`(appRepository.postRegister("", "", "")).thenReturn(expectedResponse)
+        `when`(remoteDataSource.postRegister("", "", "")).thenReturn(expectedResponse)
         val actualResponse = appViewModel.postRegister("", "", "").getOrAwaitValue()
 
-        Mockito.verify(appRepository).postRegister("", "", "")
+        Mockito.verify(remoteDataSource).postRegister("", "", "")
 
         Assert.assertNotNull(actualResponse)
         Assert.assertEquals(dummy.dummyResponseRegisterFailed(), actualResponse)
@@ -194,10 +197,10 @@ class AppViewModelTest {
         val expectedResponse = MutableLiveData<StoryResponse>()
         expectedResponse.value = dummy.dummyResponseGetStoryLocationFailed()
 
-        `when`(appRepository.getStoryLocation("")).thenReturn(expectedResponse)
+        `when`(remoteDataSource.getStoryLocation("")).thenReturn(expectedResponse)
         val actualResponse = appViewModel.getStoryLocation("").getOrAwaitValue()
 
-        Mockito.verify(appRepository).getStoryLocation("")
+        Mockito.verify(remoteDataSource).getStoryLocation("")
 
         Assert.assertNotNull(actualResponse)
         Assert.assertEquals(dummy.dummyResponseGetStoryLocationFailed(), actualResponse)
@@ -208,10 +211,10 @@ class AppViewModelTest {
         val expectedResponse = MutableLiveData<BaseResponse>()
         expectedResponse.value = dummy.dummyResponsePostStoryFailed()
 
-        `when`(appRepository.postStory("", null, null)).thenReturn(expectedResponse)
+        `when`(remoteDataSource.postStory("", null, null)).thenReturn(expectedResponse)
         val actualResponse = appViewModel.postStory("", null, null).getOrAwaitValue()
 
-        Mockito.verify(appRepository).postStory("", null, null)
+        Mockito.verify(remoteDataSource).postStory("", null, null)
 
         Assert.assertNotNull(actualResponse)
         Assert.assertEquals(dummy.dummyResponsePostStoryFailed(), actualResponse)
@@ -222,10 +225,10 @@ class AppViewModelTest {
         val expectedResponse = MutableLiveData<DetailResponse>()
         expectedResponse.value = dummy.dummyResponseGetDetailStoryFailed()
 
-        `when`(appRepository.getDetailStory("", "")).thenReturn(expectedResponse)
+        `when`(remoteDataSource.getDetailStory("", "")).thenReturn(expectedResponse)
         val actualResponse = appViewModel.getDetailStory("", "").getOrAwaitValue()
 
-        Mockito.verify(appRepository).getDetailStory("", "")
+        Mockito.verify(remoteDataSource).getDetailStory("", "")
 
         Assert.assertNotNull(actualResponse)
         Assert.assertEquals(dummy.dummyResponseGetDetailStoryFailed(), actualResponse)

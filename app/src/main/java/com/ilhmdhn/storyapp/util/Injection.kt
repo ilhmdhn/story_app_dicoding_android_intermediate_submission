@@ -4,6 +4,7 @@ import android.content.Context
 import com.ilhmdhn.storyapp.data.lokal.StoryDatabase
 import com.ilhmdhn.storyapp.data.remote.ApiConfig
 import com.ilhmdhn.storyapp.data.AppRepository
+import com.ilhmdhn.storyapp.data.remote.RemoteDataSource
 
 object Injection {
     fun provideRepository(context: Context): AppRepository {

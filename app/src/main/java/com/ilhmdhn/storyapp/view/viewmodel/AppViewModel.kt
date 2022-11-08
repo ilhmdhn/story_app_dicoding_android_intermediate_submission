@@ -6,16 +6,18 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.ilhmdhn.storyapp.data.AppRepository
+import com.ilhmdhn.storyapp.data.remote.RemoteDataSource
 import com.ilhmdhn.storyapp.data.remote.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-class AppViewModel(private val appRepository: AppRepository): ViewModel() {
+class AppViewModel(private val appRepository: AppRepository, private val remoteDataSource: RemoteDataSource): ViewModel() {
+
     fun postLogin(email: String, password: String):LiveData<LoginResponse> =
-        appRepository.postLogin(email, password)
+        remoteDataSource.postLogin(email, password)
 
     fun postRegister(name: String, email: String, password: String):LiveData<BaseResponse>{
-        return appRepository.postRegister(name, email, password);
+        return remoteDataSource.postRegister(name, email, password);
     }
 
     fun getStory(auth: String): LiveData<PagingData<ListStoryItem>>{
@@ -23,14 +25,14 @@ class AppViewModel(private val appRepository: AppRepository): ViewModel() {
     }
 
     fun getStoryLocation(auth: String): LiveData<StoryResponse>{
-        return appRepository.getStoryLocation(auth)
+        return remoteDataSource.getStoryLocation(auth)
     }
 
     fun postStory(auth: String, file: MultipartBody.Part?, description: RequestBody?):LiveData<BaseResponse>{
-        return appRepository.postStory(auth, file, description)
+        return remoteDataSource.postStory(auth, file, description)
     }
 
     fun getDetailStory(auth: String, id: String): LiveData<DetailResponse>{
-        return appRepository.getDetailStory(auth, id)
+        return remoteDataSource.getDetailStory(auth, id)
     }
 }

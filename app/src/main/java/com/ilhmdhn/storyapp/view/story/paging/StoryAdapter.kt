@@ -20,7 +20,6 @@ class StoryAdapter: PagingDataAdapter<ListStoryItem, StoryAdapter.ListViewHolder
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val data = getItem(position)
-        Log.d("data masuk", data.toString())
         if (data!=null){
             holder.bind(data)
         }
